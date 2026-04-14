@@ -53,11 +53,3 @@ blogaggregator register <name>
 | `following` | | List the registered feeds followed by the current user. |
 | `unfollow` | `<feed_url>` | Have the current user unfollow a feed given the url. |
 | `browse` | `<limit>` | Retrieves a list of recently aggregated posts from the feeds that the current user is following and prints them to the console. <br>Note: The `limit` argument is optional. Running without a limit will print two posts only. |
-| Reads all feeds and stores the posts. |
-| `addfeed` | `<name> <url>` | Registers a new feed for the app to aggregate. Provide a name and the url for the feed as arguments. The current user will follow this feed. |
-| `feeds` | | Lists all registered feeds. |
-| `follow` | `<feed_url>` | Have the current user follow a previously registered feed given the url. |
-| `following` | | List the registered feeds followed by the current user. |
-| `unfollow` | `<feed_url>` | Have the current user unfollow a feed given the url. |
-| `browse` | `<limit>` | Retrieves a list of recently aggregated posts from the feeds that the current user is following and prints them to the console. <br>Note: The `limit` argument is optional. Running without a limit will print two posts only. |
-
