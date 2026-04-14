@@ -1,55 +1,57 @@
-# Blog Aggregator (aka gator)
+# Blog Aggregator (aka Gator)
 
-## Requirements
-* Go (v1.26 or later)
-* Postgres (v15 or later)
-* goose (v3.27.0)
+A multi-player command line tool for aggregating RSS feeds and viewing the posts.
 
-## Tools Used
-* sqlc (v1.30.0)
 ## Installation
-### Step 1. Database Creation
-Enter the `psql` shell:
-* Mac: `psql postgres`
-* Linux: `sudo -u postgres psql`
 
-Create a new database. I called mine `gator`.
-```
-CREATE DATABASE gator;
+Make sure you have the latest [Go toolchain](https://golang.org/dl/) installed as well as a local Postgres database. You can then install `blogaggregator` with:
+
+```bash
+go install ...
 ```
 
-### Step 2. Database Migration with Goose
-In your console, navigate to the `sql/schema` directory. Run the following Goose command to create the required tables.
-```
-goose postgres <connection_string> up
+## Config
 
-# example:
-# goose postgres "postgres://postgres:postgres@localhost:5432/gator" up
-```
+Create a `.gatorconfig.json` file in your home directory with the following structure:
 
-### Step 3. Command Line Installation
-In your console, navigate to the project directory. Run the following command to install the application.
-```
-go install .
+```json
+{
+  "db_url": "postgres://username:@localhost:5432/database?sslmode=disable"
+}
 ```
 
-### Step 4. Register a User
-In your console, run the following command:
-```
+Replace the values with your database connection string.
+
+## Usage
+
+Create a new user:
+
+```bash
 blogaggregator register <name>
 ```
 
-## Usage
-| Command | Arguments | Description |
-| --- | --- | --- |
-| `register` | `<name>` | Register a new user. This user is set as the currently logged in user. |
-| `login` | `<name>` | Switch the currently logged in user. |
-| `reset` | | Resets the database by deleting all records, including users. <br>Note: remember to register a new user before running other commands. |
-| `users` | | Prints the list of users to the console and notes the current user. |
-| `agg` | `<time_between_requests>` | Reads all feeds and stores the posts. |
-| `addfeed` | `<name> <url>` | Registers a new feed for the app to aggregate. Provide a name and the url for the feed as arguments. The current user will follow this feed. |
-| `feeds` | | Lists all registered feeds. |
-| `follow` | `<feed_url>` | Have the current user follow a previously registered feed given the url. |
-| `following` | | List the registered feeds followed by the current user. |
-| `unfollow` | `<feed_url>` | Have the current user unfollow a feed given the url. |
-| `browse` | `<limit>` | Retrieves a list of recently aggregated posts from the feeds that the current user is following and prints them to the console. <br>Note: The `limit` argument is optional. Running without a limit will print two posts only. |
+Add a feed:
+
+```bash
+gatoblogaggregatorr addfeed <url>
+```
+
+Start the aggregator:
+
+```bash
+blogaggregator agg 30s
+```
+
+View the posts:
+
+```bash
+blogaggregator browse [limit]
+```
+
+There are a few other commands you'll need as well:
+
+- `blogaggregator login <name>` - Log in as a user that already exists
+- `blogaggregator users` - List all users
+- `blogaggregator feeds` - List all feeds
+- `blogaggregator follow <url>` - Follow a feed that already exists in the database
+- `blogaggregator unfollow <url>` - Unfollow a feed that already exists in the database
