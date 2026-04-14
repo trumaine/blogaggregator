@@ -80,4 +80,7 @@ func printFeed(feed database.Feed, user database.User) {
 	fmt.Printf("* Name:          %s\n", feed.Name)
 	fmt.Printf("* URL:           %s\n", feed.Url)
 	fmt.Printf("* User:          %s\n", user.Name)
+	if feed.LastFetchedAt.Valid {
+		fmt.Printf("* Last Fetched:  %s\n", time.Since(feed.LastFetchedAt.Time).Truncate(time.Second))
+	}
 }
